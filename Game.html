@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <a href="css/scratch.css"></a>
+        <!-- <a class="navbar-brand" href="index.html">Start Bootstrap</a> -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Scratch.html">From Scratch Page</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="Game.html">Game</a></li>
+                <!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li> -->
+            </ul>
+        </div>
+    </div>
+    <style>
+    </style>
+</nav>
+<body>
+    <header class="masthead" style="background-image: url('assets/img/images.jpg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                         <style>
+                         </style>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+ 
+                </Style>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+            </div>
+        </div>
+    </nav>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .game-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px;
+    }
+
+    .word-container {
+      margin-right: 40px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .word {
+      font-size: 40px;
+      letter-spacing: 5px;
+      margin: 20px 0;
+    }
+
+    .incorrect-guesses {
+      color: red;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .hangman {
+      font-size: 60px;
+      color: #333;
+      margin: 20px 0;
+      white-space: pre-wrap;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .guess-input {
+      padding: 10px;
+      font-size: 20px;
+      margin-top: 20px;
+      width: 50px;
+      text-align: center;
+    }
+
+    .button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .result {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 30px;
+    }
+
+    .restart-button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin-top: 20px;
+      cursor: pointer;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .restart-button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="game-container">
+    <div class="word-container">
+      <h1>Hangman Game</h1>
+      <style>
+        h1{
+            color: black;
+        }
+      </style>
+
+      <div class="word" id="wordDisplay"></div>
+      <div class="incorrect-guesses" id="incorrectGuesses"></div>
+
+      <input type="text" id="guessInput" class="guess-input" maxlength="1" />
+      <button class="button" onclick="makeGuess()">Guess</button>
+
+      <div class="result" id="resultDisplay"></div>
+
+      <button class="restart-button" id="restartButton" onclick="startGame()">Restart Game</button>
+    </div>
+
+    <div class="hangman" id="hangmanDisplay">
+      _________
+    </div>
+  </div>
+
+  <script>
+    const words = [
+      "javascript", "hangman", "programming", "developer", "coding", "algorithm", "function", "variable", "python", "typescript",
+      "html", "css", "react", "angular", "nodejs", "webpack", "express", "mongodb", "mysql", "database",
+      "interface", "cloud", "api", "framework", "server", "client", "component", "npm", "package", "deployment",
+      "debugging", "console", "log", "error", "syntax", "loop", "conditional", "parameter", "argument", "object",
+      "array", "string", "boolean", "number", "null", "undefined", "event", "listener", "promise", "async",
+      "await", "fetch", "ajax", "xhr", "json", "callback", "token", "hashing", "security", "encryption", "decryption",
+      "authentication", "authorization", "session", "cookie", "user", "password", "login", "logout", "signup", "login",
+      "signup", "profile", "account", "dashboard", "email", "address", "phone", "mobile", "number", "product",
+      "service", "marketing", "advertisement", "design", "ux", "ui", "website", "app", "mobileapp", "crossplatform", 
+      "testing", "unit", "integration", "frontend", "backend", "html5", "rails", "django",
+      "vue", "flutter", "reactnative", "java", "csharp", "kotlin", "swift", "android", "ios", "websocket", "docker",
+      "devops", "containerization", "virtualization", "continuous", "integration", "testing", "automation", "cloudcomputing"
+    ];
+    
+    let selectedWord = "";
+    let guessedLetters = [];
+    let incorrectGuesses = [];
+    let maxAttempts = 6;
+    let attemptsLeft = maxAttempts;
+
+    // Start a new game
+    function startGame() {
+      selectedWord = words[Math.floor(Math.random() * words.length)];
+      guessedLetters = [];
+      incorrectGuesses = [];
+      attemptsLeft = maxAttempts;
+
+      document.getElementById("wordDisplay").textContent = "_ ".repeat(selectedWord.length);
+      document.getElementById("incorrectGuesses").textContent = "";
+      document.getElementById("hangmanDisplay").textContent = "_________";
+      document.getElementById("guessInput").value = "";
+      document.getElementById("resultDisplay").textContent = "";
+      document.getElementById("restartButton").style.display = "none"; // Hide restart button
+    }
+
+    // Display the word with guessed letters
+    function updateWordDisplay() {
+      let displayWord = selectedWord.split("").map(letter => {
+        return guessedLetters.includes(letter) ? letter : "_";
+      }).join(" ");
+      document.getElementById("wordDisplay").textContent = displayWord;
+
+      if (!displayWord.includes("_")) {
+        document.getElementById("resultDisplay").textContent = "You Win!";
+        document.getElementById("restartButton").style.display = "inline-block"; // Show restart button
+      }
+    }
+
+    // Handle a guess
+    function makeGuess() {
+      const guess = document.getElementById("guessInput").value.toLowerCase();
+
+      if (!guess || guessedLetters.includes(guess) || incorrectGuesses.includes(guess)) {
+        return;
+      }
+
+      if (selectedWord.includes(guess)) {
+        guessedLetters.push(guess);
+      } else {
+        incorrectGuesses.push(guess);
+        attemptsLeft--;
+        updateHangman();
+      }
+
+      updateIncorrectGuesses();
+      updateWordDisplay();
+
+      if (attemptsLeft === 0) {
+        document.getElementById("resultDisplay").textContent = "Game Over! The word was: " + selectedWord;
+        document.getElementById("restartButton").style.display = "inline-block"; // Show restart button
+      }
+
+      document.getElementById("guessInput").value = "";
+    }
+
+    // Update incorrect guesses display
+    function updateIncorrectGuesses() {
+      document.getElementById("incorrectGuesses").textContent = "Incorrect Guesses: " + incorrectGuesses.join(", ");
+    }
+
+    // Update the hangman graphic (body parts)
+    function updateHangman() {
+      const hangmanStages = [
+        "_________",
+        "       |",
+        "       O",
+        "       /|\\",
+        "       / \\",
+        " |",
+        " |"
+      ];
+
+      let hangmanDrawing = hangmanStages.slice(0, maxAttempts - attemptsLeft + 1).join("\n");
+      document.getElementById("hangmanDisplay").textContent = hangmanDrawing;
+    }
+
+    // Initialize game
+    startGame();
+  </script>
+
+</body>
+</html>
